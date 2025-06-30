@@ -1,0 +1,16 @@
+version: "3.9"
+services:
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_DB: ml_project
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass

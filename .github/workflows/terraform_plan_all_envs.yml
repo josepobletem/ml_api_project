@@ -1,0 +1,70 @@
+name: Terraform Plan (All Environments)
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [ dev, stg, main ]
+
+jobs:
+  terraform-plan-dev:
+    name: Plan DEV
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/dev'
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: hashicorp/setup-terraform@v3
+
+      - name: Init Terraform
+        working-directory: terraform/env/dev
+        run: terraform init -backend=false
+
+      - name: Validate
+        working-directory: terraform/env/dev
+        run: terraform validate
+
+      - name: Plan
+        working-directory: terraform/env/dev
+        run: terraform plan -var="project_id=dummy-project" -var="region=us-central1" -var="docker_image=gcr.io/project/ml-api:dev" -var="db_password=changeme" -input=false
+
+  terraform-plan-stg:
+    name: Plan STG
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/stg'
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: hashicorp/setup-terraform@v3
+
+      - name: Init Terraform
+        working-directory: terraform/env/stg
+        run: terraform init -backend=false
+
+      - name: Validate
+        working-directory: terraform/env/stg
+        run: terraform validate
+
+      - name: Plan
+        working-directory: terraform/env/stg
+        run: terraform plan -var="project_id=dummy-project" -var="region=us-central1" -var="docker_image=gcr.io/project/ml-api:stg" -var="db_password=changeme" -input=false
+
+  terraform-plan-prod:
+    name: Plan PROD
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: hashicorp/setup-terraform@v3
+
+      - name: Init Terraform
+        working-directory: terraform/env/prod
+        run: terraform init -backend=false
+
+      - name: Validate
+        working-directory: terraform/env/prod
+        run: terraform validate
+
+      - name: Plan
+        working-directory: terraform/env/prod
+        run: terraform plan -var="project_id=dummy-project" -var="region=us-central1" -var="docker_image=gcr.io/project/ml-api:prod" -var="db_password=changeme" -input=false

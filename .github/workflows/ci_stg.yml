@@ -1,0 +1,41 @@
+name: CI Staging
+
+on:
+  push:
+    branches: [ stg ]
+
+jobs:
+  test-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Instalar dependencias
+        run: |
+          pip install -r requirements.txt
+
+      - name: Ejecutar pruebas
+        run: |
+          pytest --disable-warnings --maxfail=1
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Init Terraform STG
+        working-directory: terraform/env/stg
+        run: terraform init
+
+      - name: Terraform Plan STG
+        working-directory: terraform/env/stg
+        run: terraform plan
+
+      - name: Terraform Apply STG
+        working-directory: terraform/env/stg
+        run: terraform apply -auto-approve

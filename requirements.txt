@@ -1,0 +1,8 @@
+fastapi
+uvicorn
+xgboost
+joblib
+openai
+jose
+python-multipart
+pytest
