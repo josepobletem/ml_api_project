@@ -19,7 +19,7 @@ jobs:
 
       - name: Instalar dependencias
         run: |
-          pip install -r requirements.txt
+          pip install --no-build-isolation -r requirements.txt
 
       - name: Ejecutar pruebas
         run: |
