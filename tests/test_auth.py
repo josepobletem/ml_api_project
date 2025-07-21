@@ -4,4 +4,3 @@ def test_get_token(client):
     data = response.json()
     assert "access_token" in data
     assert data["token_type"] == "bearer"
-

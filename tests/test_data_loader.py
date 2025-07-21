@@ -1,5 +1,7 @@
-from ml_pipeline.data_loader import load_data_from_csv
 import pandas as pd
+
+from ml_pipeline.data_loader import load_data_from_csv
+
 
 def test_load_data_from_csv(tmp_path):
     test_file = tmp_path / "sample.csv"

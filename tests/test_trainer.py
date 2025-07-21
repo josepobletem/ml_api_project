@@ -1,5 +1,7 @@
-from ml_pipeline.trainer import train_model
 import numpy as np
+
+from ml_pipeline.trainer import train_model
+
 
 def test_train_model():
     X = np.array([[1, 2], [3, 4], [5, 6]])

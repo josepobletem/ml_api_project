@@ -1,9 +1,10 @@
+import os
+from datetime import datetime, timedelta
+
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError, jwt
 from pydantic import BaseModel
-import os
-from datetime import datetime, timedelta
 
 # Configuración (leer desde entorno o usar valores por defecto)
 SECRET_KEY = os.getenv("SECRET_KEY", "secret")
@@ -23,7 +24,9 @@ class TokenResponse(BaseModel):
 
 def create_access_token(data: dict, expires_delta: timedelta = None):
     to_encode = data.copy()
-    expire = datetime.utcnow() + (expires_delta or timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES))
+    expire = datetime.utcnow() + (
+        expires_delta or timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    )
     to_encode.update({"exp": expire})
     return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
 
@@ -34,8 +37,7 @@ def verify_token(token: str = Depends(oauth2_scheme)):
         return payload
     except JWTError:
         raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN,
-            detail="Token inválido o expirado"
+            status_code=status.HTTP_403_FORBIDDEN, detail="Token inválido o expirado"
         )
 
 
