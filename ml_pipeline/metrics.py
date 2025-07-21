@@ -14,3 +14,8 @@ def classification_metrics(y_true, y_pred, y_proba=None) -> dict:
         except ValueError:
             metrics["roc_auc"] = None
     return metrics
+
+
+def evaluate_model(model, X_test, y_test):
+    y_pred = model.predict(X_test)
+    return {"accuracy": accuracy_score(y_test, y_pred)}

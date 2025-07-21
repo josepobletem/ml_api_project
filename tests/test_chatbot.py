@@ -11,7 +11,8 @@ def mock_openai_response():
         }
         yield mock_create
 
-def test_chatbot(client, headers, mock_openai_response):
+def test_chatbot(client, auth_token, mock_openai_response):
+    headers = {"Authorization": f"Bearer {auth_token}"}
     question = "¿Qué es inteligencia artificial?"
     response = client.post("/chatbot/", params={"question": question}, headers=headers)
 
