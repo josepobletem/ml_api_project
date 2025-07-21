@@ -1,6 +1,75 @@
-# 🧠 ML API Project with FastAPI, XGBoost & ChatGPT
+# 🧠 ML API Project
 
-Este proyecto implementa una API de Machine Learning para predicción con XGBoost, integración con ChatGPT para consultas inteligentes, y una arquitectura de despliegue profesional en GCP usando Terraform, Docker y CI/CD con GitHub Actions.
+API desarrollada con FastAPI para servir modelos de Machine Learning (XGBoost) y un chatbot basado en OpenAI. Incluye autenticación JWT y  y una arquitectura de despliegue profesional en GCP usando Terraform, Docker y CI/CD con GitHub Actions. Con pruebas automatizadas con `pytest`.
+
+---
+
+## 📦 Características
+
+- Endpoint `/predict/` que responde con predicciones usando un modelo entrenado (`model.joblib`)
+- Endpoint `/chatbot/` que responde preguntas utilizando la API de OpenAI
+- Autenticación JWT vía `/token`
+- Pruebas unitarias con `pytest`
+- Mock de dependencias como OpenAI y el modelo en testing
+- Preparado para uso local o despliegue con Docker/Terraform
+
+---
+
+## ✅ Pre-requisitos
+
+- Python 3.10 o 3.11 (❌ Python 3.13 puede causar errores con `numpy`, `scikit-learn`, etc.)
+- Git
+- OpenAI API Key (para funcionalidad completa del chatbot)
+- (Opcional) Docker
+- (Opcional) Cuenta GCP si quieres usar backend remoto con Terraform
+
+---
+
+## 🚀 Instalación y ejecución local
+
+```bash
+git clone https://github.com/josepobletem/ml_api_project.git
+cd ml_api_project
+
+# Crear entorno virtual
+python -m venv venv
+source venv/bin/activate        # Windows: venv\Scripts\activate
+
+# Instalar dependencias
+pip install --no-build-isolation -r requirements.txt
+
+# Ejecutar la API
+uvicorn api.main:app --reload
+```
+
+🔐 Autenticación
+
+Solicita un token:
+
+```bash
+curl -X POST http://localhost:8000/token
+```
+Respuesta:
+```bash
+{
+  "access_token": "<jwt_token>",
+  "token_type": "bearer"
+}
+```
+
+Usa este token para acceder a /predict/ y /chatbot/ con el header:
+
+```bash
+Authorization: Bearer <jwt_token>
+```
+
+📡 Endpoints
+| Método | Ruta        | Descripción                           |
+| ------ | ----------- | ------------------------------------- |
+| POST   | `/token`    | Devuelve JWT de autenticación         |
+| POST   | `/predict/` | Predicción ML con XGBoost             |
+| POST   | `/chatbot/` | Chatbot que usa OpenAI para responder |
+
 
 ---
 
@@ -56,16 +125,6 @@ ml_api_project/
 ├── requirements.txt
 └── README.md
 ```
-
----
-
-## 🚀 Endpoints Principales
-
-| Método | Ruta            | Autenticación | Descripción                            |
-|--------|------------------|---------------|----------------------------------------|
-| GET    | `/token`         | ❌            | Genera un token JWT para autenticación |
-| POST   | `/predict/`      | ✅            | Retorna predicción usando XGBoost      |
-| POST   | `/chatbot/`      | ✅            | Consulta a ChatGPT con feedback        |
 
 ---
 
@@ -214,6 +273,15 @@ Este proyecto incluye un único workflow combinado para validar los planes de Te
 
 Esto permite validar la infraestructura como código en CI de forma segura, sin aplicar cambios y sin acceso a GCP.
 ---
+
+🤝 Contribuciones
+
+¡Contribuciones son bienvenidas!
+
+1.-Haz un fork del repositorio.
+2.-Crea una rama (feature/nueva-funcionalidad).
+3.-Abre un Pull Request.
+
 
 ## 👨‍💻 Créditos
 
