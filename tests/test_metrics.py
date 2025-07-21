@@ -1,7 +1,9 @@
-from ml_pipeline.metrics import evaluate_model
 from sklearn.datasets import load_iris
-from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+
+from ml_pipeline.metrics import evaluate_model
+
 
 def test_evaluate_model():
     data = load_iris()

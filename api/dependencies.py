@@ -1,11 +1,12 @@
 from fastapi import Depends, HTTPException
 from fastapi.security import OAuth2PasswordBearer
-from jose import jwt, JWTError
+from jose import JWTError, jwt
 
 # Configuración básica de seguridad
 SECRET_KEY = "secret"
 ALGORITHM = "HS256"
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+
 
 def verify_token(token: str = Depends(oauth2_scheme)) -> dict:
     """
@@ -18,6 +19,7 @@ def verify_token(token: str = Depends(oauth2_scheme)) -> dict:
     except JWTError:
         raise HTTPException(status_code=403, detail="Token inválido o expirado")
 
+
 # Ejemplo de dependencia para inyectar configuración global
 def get_model_path() -> str:
     """
@@ -25,6 +27,7 @@ def get_model_path() -> str:
     Puedes expandir esto con rutas dinámicas por ambiente.
     """
     return "model.joblib"
+
 
 # Ejemplo de conexión a base de datos o recurso compartido
 def get_db_conn():

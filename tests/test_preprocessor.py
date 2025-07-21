@@ -1,11 +1,10 @@
-from ml_pipeline.preprocessor import build_preprocessor
 import pandas as pd
 
+from ml_pipeline.preprocessor import build_preprocessor
+
+
 def test_preprocessor():
-    df = pd.DataFrame({
-        "num": [1, 2, None],
-        "cat": ["a", "b", "a"]
-    })
+    df = pd.DataFrame({"num": [1, 2, None], "cat": ["a", "b", "a"]})
 
     preprocessor = build_preprocessor(["num"], ["cat"])
     result = preprocessor.fit_transform(df)

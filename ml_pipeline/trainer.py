@@ -1,6 +1,8 @@
-import xgboost as xgb
-import joblib
 import os
+
+import joblib
+import xgboost as xgb
+
 
 def train_model(X, y, model_path="model.joblib", **xgb_params):
     """
