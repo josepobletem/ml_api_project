@@ -278,9 +278,9 @@ Esto permite validar la infraestructura como código en CI de forma segura, sin 
 
 ¡Contribuciones son bienvenidas!
 
-1.-Haz un fork del repositorio.
-2.-Crea una rama (feature/nueva-funcionalidad).
-3.-Abre un Pull Request.
+- 1.-Haz un fork del repositorio.
+- 2.-Crea una rama (feature/nueva-funcionalidad).
+- 3.-Abre un Pull Request.
 
 
 ## 👨‍💻 Créditos
